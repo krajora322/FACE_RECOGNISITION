@@ -12,6 +12,7 @@ FACE_RECOGNITION/
 │   └── index.html         # Frontend HTML file
 
 
+
 ## 🚀 Features
 - Real-time Face Detection using OpenCV and Face Recognition
 - Automatic Attendance Marking in a CSV file
