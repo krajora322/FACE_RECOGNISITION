@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Attendance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #7F00FF, #E100FF);
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 80%;
+        }
+        h1 {
+            color: #333;
+        }
+        .content {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .box {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            margin: 10px;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        button {
+            background: #7F00FF;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #5E00CC;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📷 Face Recognition Attendance</h1>
+        <div class="content">
+            <div class="box">
+                <h3>Camera Feed</h3>
+                <img id="video_feed" src="/video_feed" alt="Camera is inactive">
+                <button onclick="startCamera()">Start Camera</button>
+            </div>
+            <div class="box">
+                <h3>Attendance Records</h3>
+                <ul id="attendance_list">No attendance records yet</ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startCamera() {
+            document.getElementById("video_feed").src = "/video_feed";
+            fetchAttendance();
+        }
+        function fetchAttendance() {
+            fetch('/attendance')
+                .then(response => response.json())
+                .then(data => {
+                    let list = document.getElementById("attendance_list");
+                    list.innerHTML = "";
+                    data.forEach(record => {
+                        let item = document.createElement("li");
+                        item.textContent = record;
+                        list.appendChild(item);
+                    });
+                });
+        }
+        setInterval(fetchAttendance, 5000);
+    </script>
+</body>
+</html>
